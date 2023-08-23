@@ -1,9 +1,9 @@
 args<-commandArgs(T)
-#a<-read.table(args[1],header=F)
-a<-read.table("/Users/jijin/Desktop/jm44/data/process_Final/Genome_evalutaion/jm44.1m.bed")
+a<-read.table(args[1],header=F)
+#a<-read.table("/Users/jijin/Desktop/jm44/data/process_Final/Genome_evalutaion/jm44.1m.bed")
 x<-a$V4
 name<-args[2]
-setwd("/Users/jijin/Desktop/jm44/data/process_Final/Genome_evalutaion/")
+#setwd("/Users/jijin/Desktop/jm44/data/process_Final/Genome_evalutaion/")
 
 
 
@@ -46,7 +46,7 @@ dense<-data.frame(density(x2$x2)[c("x","y")])
 data<-data.frame(x=c(left_tail,right_tail))
 
 
-pdf2<-paste(name, ".pdf", sep = "")
+pdf3<-paste(name, ".pdf", sep = "")
 pdf(pdf3)
 ggplot()+
   geom_histogram(data=x2,aes(x=x2,y=..density..), color="#88ada6", alpha=.25, fill="#fffbf0", binwidth = 2, center=1)+
@@ -72,7 +72,12 @@ ggplot()+
 
 dev.off()
 
-index<-0
+
+a1<-a[a$V4 > left_tail & a$V4 < right_tail,]
+a2<-a1[a1$V5 < left_tail | a1$V5 > right_tail,]
+a3<-a2[a2$V6 < left_tail | a2$V6 > right_tail,]
+
+index<--10*log10(length(a3$V1)/length(a$V1))
 index<-c(index,left_tail,right_tail)
 
 
